@@ -8,10 +8,10 @@
 #   - You can enter hostnames or ip addresses
 #   - A hostname/ip can be a member of multiple groups
 
-[netmon]
+[piprobe]
 home.netmon.forwardingplane.net
 
-[netmon:vars]
+[piprobe:vars]
 ansible_ssh_user=buraglio
 #ansible_ssh_pass=raspberry
 ansible_sudo=true

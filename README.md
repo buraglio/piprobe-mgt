@@ -5,7 +5,7 @@
 First update the *hosts* file to use the IP's of your raspberry pi below the [pis] group,<br />
 And edit the **/roles/piprobe/tasks/main.yml** file for your own users needs!
 
-Once you've done that simply cd into the server_pi directory and run:
+Once you've done that simply cd into the piprobe directory and run:
 ```bash
 ansible-playbook piprobe.yml
 ```

@@ -5,7 +5,7 @@ sshd_gracetime: 20
 sshd_passauth: "yes"
 sshd_keybits: 768
 
-ntpd_server: 192.168.0.1
+ntpd_server: 130.126.24.24
 
 deny_purge: 1w
 deny_purge_threshold: 2
