@@ -1,0 +1,8 @@
+---
+- name: Configure a headless pi setup for netmon
+  hosts: netmon
+  user: buraglio
+  sudo: yes
+
+  roles:
+     - netmon
