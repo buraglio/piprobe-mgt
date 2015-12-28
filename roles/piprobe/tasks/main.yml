@@ -1,0 +1,50 @@
+---
+#- name: Update SSHD Config first so if it breaks...
+#  template: src=sshdconfig.jinja2 dest=/etc/ssh/sshd_config
+#  notify: restart sshd
+
+- name: Update Aptitude
+  apt: update_cache=yes cache_valid_time=3600
+
+- name: Install Screen
+  apt: name=screen state=present
+
+- name: Install tmux
+  apt: name=tmux state=present
+
+- name: Install dnsutils
+  apt: name=dnsutils state=present
+
+- name: Install nmap
+  apt: name=nmap state=present
+
+- name: Install tshark
+  apt: name=tshark state=present
+
+- name: Install sshguard
+  apt: name=sshguard state=present
+
+- name: Install etckeeper
+  apt: name=etckeeper state=present
+
+- name: Install jwhois
+  apt: name=jwhois state=present
+
+
+#- name: Check if packages need to be autoremoved
+#  command: apt-get --dry-run autoremove
+#  register: check_autoremove
+#  changed_when: False
+
+#- name: Autoremove unused packages
+#  command: apt-get -y autoremove
+#  when: "'packages will be REMOVED' in check_autoremove.stdout"
+
+- name: Upgrade System
+  apt: update_cache=yes cache_valid_time=3600 upgrade=dist
+
+- name: Create account for buraglio
+  user: name=buraglio shell=/bin/bash groups=adm,dialout,cdrom,sudo,audio,video,plugdev,games,users,netdev,gpio,i2c,spi,input append=yes state=present password=$6$Y/yEFkcLXcuAaQ$EY3dBMxqPzh9gdt7qWBu4hC0YVOtIVfyvHev.7.oCfwGn4fOABzSKtraENtJZ4Zbt9gRYedwDT.zjnRy0
+
+- name: Add SSH keys for buraglio
+  authorized_key: user=buraglio state=present key="ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAIEArAVEOYF8qGTLIzA6yerBNv8E6d86BBToxxFQMb8oIoiJCuCJGFgDUFB0xL9IuuyQGHcLakb+OuH2civORW6ftdtpEL2Yy+mUn+/3KiIDxnHJrXqnoTNFEvkXEfq8W8nAIztEe2wMt4g0xWvATWCGuPl9iOtw7YYMypY9Ga5YctE= buraglio@heelflip.209.buraglio.com"

@@ -1,8 +1,0 @@
----
-# restart sshd!
-- name: restart sshd
-  service: name=ssh state=restarted
-
-- name: restart denyhosts
-  service: name=denyhosts state=restarted
-  
