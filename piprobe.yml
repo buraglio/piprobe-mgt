@@ -1,5 +1,5 @@
 ---
-- name: Configure a headless pi setup for netmon
+- name: Configure a headless raspberry pi running raspian for use as a network probe
   hosts: piprobe
   user: buraglio
   sudo: yes
