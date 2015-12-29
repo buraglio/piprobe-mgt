@@ -1,6 +1,6 @@
 # Piprobe management
 #### Adapted from server_pi for use to manage the piprobe
-####Ansible Playbook To strip down the current raspbian release to a more minimal, headless server type setup with minimal security essentials.
+####Ansible Playbook for management of a set of network probes based on raspian
 
 First update the *hosts* file to use the IP's of your raspberry pi below the [pis] group,<br />
 And edit the **/roles/piprobe/tasks/main.yml** file for your own users needs!
