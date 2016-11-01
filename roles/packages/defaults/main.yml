@@ -1,0 +1,11 @@
+---
+probe_packages:
+  - tmux
+  - screen
+  - dnsutils
+  - nmap
+  - tshark
+  - sshguard
+  - etckeeper
+
+unattended_upgrades: true

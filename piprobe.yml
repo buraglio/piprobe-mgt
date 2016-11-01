@@ -1,8 +1,7 @@
 ---
 - name: Configure a headless raspberry pi running raspian for use as a network probe
   hosts: piprobe
-  user: buraglio
-  sudo: yes
-
+  become: true
+  become_user: root
   roles:
-     - piprobe
+     - packages

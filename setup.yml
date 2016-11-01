@@ -1,0 +1,11 @@
+---
+- name: Initial setup of piprobe
+  hosts: all
+  become: true
+  become_user: root
+  pre_tasks:
+    - raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+  roles:
+    - { role: 'users', tags: 'users' }
+    - { role: 'ntp', tags: 'ntp' }
+    - { roles: 'lockdown', tags: 'lockdown' }

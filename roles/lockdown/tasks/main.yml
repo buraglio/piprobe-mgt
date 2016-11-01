@@ -1,0 +1,36 @@
+---
+# tasks file for roles/lockdown
+# tasks file for lockdown
+- name: Make SURE another user and key exists
+  stat:
+    path: "/home/{{ item.user }}/.ssh/authorized_keys"
+  when: "{{ create_users }}"
+  with_items:
+    - "{{ create_users }}"
+  register: user_exists
+
+- name: Make sure user has sudo or we're stuck without root
+  stat:
+    path: "/etc/sudoers.d/{{ item.user }}"
+  when: "{{ create_users }}"
+  with_items:
+    - "{{ create_users }}"
+  register: sudo_access
+
+- name: Install sshd.conf
+  template:
+    src: sshd.conf.j2
+    dest: /etc/ssh/sshd.conf
+    owner: root
+    group: root
+    mode: 0644
+  when: user_exists and sudo_access
+  notify: restart sshd
+
+- name: Install denyhosts config
+  template:
+    src: denyhosts.conf.j2
+    dest: /etc/denyhosts.conf
+    owner: root
+    group: root
+    mode: 0644
