@@ -1,0 +1,36 @@
+---
+- name: user | make sure sudo is installed
+  package:
+    name: sudo
+    state: present
+  when: ansible_os_family == 'Debian'
+
+- name: user | managing user account(s)
+  user:
+    name: "{{ item.user }}"
+    shell: "{{ item.shell|default (omit) }}"
+    comment: "{{ item.comment|default (omit) }}"
+    generate_ssh_key: "{{ item.generate_keys|default (omit) }}"
+    system: "{{ item.system_account|default (omit) }}"
+    state: "{{ item.state }}"
+    groups: "{{ item.groups|default (omit) }}"
+    append: yes
+  with_items: '{{ create_users }}'
+
+- name: user | add sudoers file
+  template:
+    src: sudoers
+    dest: /etc/sudoers.d/{{ item.user }}
+    owner: root
+    group: root
+    mode: 0440
+    validate: '/usr/sbin/visudo -cf %s'
+  with_items: '{{ create_users }}'
+  when: item.state == "present" and item.sudo
+
+- name: user | removing users from sudoers
+  file:
+    path: "/etc/sudoers.d/{{ item.user }}"
+    state: absent
+  with_items: '{{ create_users }}'
+  when: (item.state == "present" and not item.sudo) or item.state == "absent"

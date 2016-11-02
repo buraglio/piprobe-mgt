@@ -1,0 +1,3 @@
+---
+# defaults file for roles/updates
+reboot_server: False

@@ -1,0 +1,7 @@
+---
+# handlers file for roles/lockdown
+- name: restart_sshd
+  service:
+    name: ssh
+    state: restarted
+  when: ansible_os_family == "Debian"

@@ -1,0 +1,39 @@
+---
+- block:
+  - name: Install packages
+    apt:
+      name: "{{ item }}"
+      update_cache: yes
+      cache_valid_time: 3600
+      state: present
+    with_items:
+      - probe_packages
+
+  - name: Install automatic updates
+    package:
+      name: unattended-upgrades
+      state: present
+    when: unattended_upgrades
+
+  - name: Configure debconf answer
+    debconf:
+      name: 'unattended-upgrades'
+      question: 'unattended-upgrades/enable_auto_updates'
+      vtype: 'boolean'
+      value: 'true'
+    when: unattended_upgrades
+
+  - name: Install conf file
+    template:
+      src: unattended-upgrades.j2
+      dest: /etc/apt/apt.conf.d/50unattended-upgrades
+      owner: root
+      group: root
+      mode: 0644
+    when: unattended_upgrades
+
+  when: ansible_os_family == 'Debian'
+
+- rescue:
+  - debug:
+      msg: 'This is for Debian based systems only'

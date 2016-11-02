@@ -1,3 +1,22 @@
+---
+create_local_users: true
+create_users:
+  - user: buraglio
+    comment: 'Nick Buraglio'
+    pass: ''
+    generate_keys: false
+    shell: '/bin/bash'
+    state: present
+    sudo: true
+    system_account: false
+
+enable_manage_ssh_keys: true
+manage_ssh_keys:
+  - remote_user: buraglio
+    state: present
+    keys:
+      - files/buraglio.pub
+
 sshd_port: 22
 sshd_permitroot: "no"
 sshd_pubkeyauth: "yes"
@@ -19,8 +38,3 @@ deny_reset_success: "yes"
 deny_sync_interval: 1h
 deny_sync_download_threshold: 2
 deny_sync_resiliency: 1d
-
-ansible_ssh_user: pi
-ansible_ssh_pass: raspberry
-ansible_sudo: true
-ansible_connection: ssh

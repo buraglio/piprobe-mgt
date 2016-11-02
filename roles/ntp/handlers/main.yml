@@ -1,0 +1,6 @@
+---
+# handlers file for roles/ntp
+- name: restart ntp
+  service:
+    name: ntp
+    state: restart
